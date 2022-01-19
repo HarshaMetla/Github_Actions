@@ -1,4 +1,4 @@
-name: Dependency Check1
+name: Security Scan
 
 on:
   push:
@@ -38,7 +38,7 @@ jobs:
            
   job_1:
    needs: depchecktest
-   name: Build
+   name: Sonar Cloud
    runs-on: ubuntu-latest
    steps:
       - uses: actions/checkout@v2
@@ -66,7 +66,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=HarshaMetla_Github_Actions
   job_2:
-    name: docker build nmap image
+    name: building nmap image and pushing into repository
     needs: job_1
     runs-on: ubuntu-latest
     steps:
@@ -81,7 +81,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
   job_3:
-    name: docker build sqlmap
+    name:  building sqlmap image and pushing into repository
     needs: job_2
     runs-on: ubuntu-latest
     steps:
